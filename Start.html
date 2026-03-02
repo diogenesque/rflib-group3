@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Shenanigans</title>
+    <style>
+        :root {
+            --elden-gold: #c2ac69;
+            --elden-glow: rgba(194, 172, 105, 0.4);
+        }
+
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            overflow: hidden; background-color: #000;
+            font-family: 'Georgia', serif;
+        }
+
+        /* DIRECT INLINE FIX FOR BACKGROUND */
+        #bg-fixed {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.9) 90%), 
+                              url('Menu/menubg.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1;
+        }
+
+        #menu-container {
+            position: absolute; left: 8%; top: 50%;
+            transform: translateY(-50%);
+            display: flex; flex-direction: column; gap: 15px;
+        }
+
+        .title-main {
+            color: var(--elden-gold); font-size: 4rem;
+            text-transform: uppercase; letter-spacing: 8px;
+            margin-bottom: 20px; text-shadow: 0 0 20px var(--elden-glow);
+            border-left: 5px solid var(--elden-gold); padding-left: 25px;
+        }
+
+        .btn-elden {
+            background: transparent; border: none; color: #777;
+            font-size: 1.8rem; text-align: left; cursor: pointer;
+            text-transform: uppercase; letter-spacing: 3px;
+            transition: 0.3s all; padding: 10px;
+        }
+
+        .btn-elden:hover {
+            color: var(--elden-gold);
+            text-shadow: 0 0 12px var(--elden-gold);
+            transform: translateX(20px);
+        }
+
+        /* Modal Design */
+        #modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); z-index: 1000;
+        }
+
+        #credits-box {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 400px; border: 1px solid var(--elden-gold); background: #050505;
+            padding: 40px; text-align: center; box-shadow: 0 0 40px #000;
+        }
+
+        .close-link {
+            display: inline-block; margin-top: 25px; color: var(--elden-gold);
+            text-decoration: none; font-size: 0.9rem; letter-spacing: 2px;
+            cursor: pointer; border: 1px solid var(--elden-gold); padding: 8px 20px;
+        }
+
+        body {
+        background-image: url('menu/menubg.jpeg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+        }
+    </style>
+</head>
+<body onclick="initAudio()">
+    <p style="background-image: url('menu/menubg.jpeg');"></p>
+
+    <div id="bg-fixed"></div>
+
+    <audio id="menuBgm" loop preload="auto">
+        <source src="Menu/menubgm.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="menu-container">
+        <div class="title-main">Credit Shenanigans</div>
+        <button class="btn-elden" onclick="location.href='case1/case1.html'">Start Case I</button>
+        <button class="btn-elden" onclick="toggleCredits(true)">Credits</button>
+    </div>
+
+    <div id="modal-overlay" onclick="toggleCredits(false)">
+        <div id="credits-box" onclick="event.stopPropagation()">
+            <h2 style="color: var(--elden-gold); letter-spacing: 5px;">Group 3</h2>
+            <div style="height: 1px; background: var(--elden-gold); margin: 20px 0;"></div>
+            <p style="color: #888; line-height: 2;">
+                ANGCAO, John Ely R. <br>
+                CHUA, Wynne Lieanne O. <br>
+                DAYOS, Jan Andrei R. <br>
+                IGNACO, Francis Levoie B. <br>
+                MAPOLON, Ahlia Nicole A. <br>
+                MUELAN, Erica B. <br>
+                YU, Andrei Niccolo C. <br>
+            </p>
+            <div class="close-link" onclick="toggleCredits(false)">RETURN</div>
+        </div>
+    </div>
+
+    <script>
+        let audioStarted = false;
+        const bgm = document.getElementById('menuBgm');
+
+        // This function forces audio to play the instant the screen is touched
+        function initAudio() {
+            if (!audioStarted) {
+                bgm.volume = 0.5;
+                bgm.play().then(() => {
+                    audioStarted = true;
+                }).catch(err => console.log("Audio waiting for stronger interaction..."));
+            }
+        }
+
+        function toggleCredits(show) {
+            document.getElementById('modal-overlay').style.display = show ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
